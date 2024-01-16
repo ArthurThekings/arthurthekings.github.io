@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+         body {
+         font-family: 'Arial', sans-serif;
+         text-align: center;
+         margin: 0;
+         padding: 0;
+         background-color: #FFFFFF;
+         }
+         h1 {
+         font-size: 20px;
+         }
+         #countdown {
+         font-size: 20px;
+         color: red;
+         }
+         /* Adicionando estilo para o contêiner de confetes */
+         #confetti-canvas {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         pointer-events: none;
+         }
+      </style>
+      <title>Contador Regressivo</title>
+      <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+   </head>
+   <body>
+      <h1>Guia de Pagamento válida por <span id="countdown"></span></h1>
+      <script>
+         var tempoInicial = 10 * 60;
+         
+         function atualizarContador() {
+           var minutos = Math.floor(tempoInicial / 60);
+           var segundos = tempoInicial % 60;
+         
+           segundos = segundos < 10 ? '0' + segundos : segundos;
+           document.getElementById('countdown').textContent = minutos + ':' + segundos;
+           tempoInicial--;
+         
+           if (tempoInicial < 0) {
+             document.getElementById('countdown').textContent = 'Tempo expirado! Pague agora.';
+           } else {
+             setTimeout(atualizarContador, 1000);
+           }
+         }
+         
+         document.addEventListener('DOMContentLoaded', function () {
+           atualizarContador();
+           var confettiSettings = { target: 'confetti-canvas' };
+           var confetti = new ConfettiGenerator(confettiSettings);
+           confetti.render();
+         });
+      </script>
+      <div id="confetti-canvas"></div>
+   </body>
+</html>
